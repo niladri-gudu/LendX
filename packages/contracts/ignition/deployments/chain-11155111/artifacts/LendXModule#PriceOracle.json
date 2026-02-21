@@ -1,0 +1,155 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "PriceOracle",
+  "sourceName": "contracts/oracle/PriceOracle.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_initialPrice",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidPrice",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableInvalidOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "oldPrice",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newPrice",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "PriceUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "getETHPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_newPrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "setPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600e575f5ffd5b50604051610363380380610363833981016040819052602b9160cb565b3380604f57604051631e4fbdf760e01b81525f600482015260240160405180910390fd5b605681607c565b50805f0360755760405162bfc92160e01b815260040160405180910390fd5b60015560e1565b5f80546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b5f6020828403121560da575f5ffd5b5051919050565b610275806100ee5f395ff3fe608060405234801561000f575f5ffd5b5060043610610055575f3560e01c8063715018a6146100595780638da5cb5b1461006357806391b7f5ed14610082578063a607a8d914610095578063f2fde38b146100a6575b5f5ffd5b6100616100b9565b005b5f546040516001600160a01b0390911681526020015b60405180910390f35b6100616100903660046101fb565b6100cc565b600154604051908152602001610079565b6100616100b4366004610212565b61013e565b6100c1610180565b6100ca5f6101ac565b565b6100d4610180565b805f036100f35760405162bfc92160e01b815260040160405180910390fd5b60018054908290556040805182815260208101849052428183015290517f15819dd2fd9f6418b142e798d08a18d0bf06ea368f4480b7b0d3f75bd966bc489181900360600190a15050565b610146610180565b6001600160a01b03811661017457604051631e4fbdf760e01b81525f60048201526024015b60405180910390fd5b61017d816101ac565b50565b5f546001600160a01b031633146100ca5760405163118cdaa760e01b815233600482015260240161016b565b5f80546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b5f6020828403121561020b575f5ffd5b5035919050565b5f60208284031215610222575f5ffd5b81356001600160a01b0381168114610238575f5ffd5b939250505056fea26469706673582212208a11a547e2110ae2f33fb4f62f5f03172f816044557dea8c83359744180d68ce64736f6c634300081c0033",
+  "deployedBytecode": "0x608060405234801561000f575f5ffd5b5060043610610055575f3560e01c8063715018a6146100595780638da5cb5b1461006357806391b7f5ed14610082578063a607a8d914610095578063f2fde38b146100a6575b5f5ffd5b6100616100b9565b005b5f546040516001600160a01b0390911681526020015b60405180910390f35b6100616100903660046101fb565b6100cc565b600154604051908152602001610079565b6100616100b4366004610212565b61013e565b6100c1610180565b6100ca5f6101ac565b565b6100d4610180565b805f036100f35760405162bfc92160e01b815260040160405180910390fd5b60018054908290556040805182815260208101849052428183015290517f15819dd2fd9f6418b142e798d08a18d0bf06ea368f4480b7b0d3f75bd966bc489181900360600190a15050565b610146610180565b6001600160a01b03811661017457604051631e4fbdf760e01b81525f60048201526024015b60405180910390fd5b61017d816101ac565b50565b5f546001600160a01b031633146100ca5760405163118cdaa760e01b815233600482015260240161016b565b5f80546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b5f6020828403121561020b575f5ffd5b5035919050565b5f60208284031215610222575f5ffd5b81356001600160a01b0381168114610238575f5ffd5b939250505056fea26469706673582212208a11a547e2110ae2f33fb4f62f5f03172f816044557dea8c83359744180d68ce64736f6c634300081c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/oracle/PriceOracle.sol",
+  "buildInfoId": "solc-0_8_28-96f6e544b20a716f2709f4de09fb40ed9fe87540"
+}

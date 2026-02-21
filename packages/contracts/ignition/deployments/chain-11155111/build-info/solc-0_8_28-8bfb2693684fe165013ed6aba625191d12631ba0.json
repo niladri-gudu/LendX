@@ -1,0 +1,42 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-8bfb2693684fe165013ed6aba625191d12631ba0",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/interest/InterestRateModel.sol": "project/contracts/interest/InterestRateModel.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/interest/InterestRateModel.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.26;\r\n\r\nimport { IInterestRateModel } from \"../interfaces/IInterestRateModel.sol\";\r\n\r\ncontract InterestRateModel is IInterestRateModel {\r\n    error InvalidUtilization();\r\n\r\n    uint256 public constant MAX_UTILIZATION = 1e18;\r\n\r\n    uint256 public constant LOW_RATE = 5e16;\r\n    uint256 public constant MID_RATE = 1e17;\r\n    uint256 public constant HIGH_RATE = 2e17;\r\n\r\n    function getBorrowRate(uint256 utilization) external pure override returns (uint256) {\r\n        if (utilization > MAX_UTILIZATION) revert InvalidUtilization();\r\n\r\n        if (utilization <= 5e17) {\r\n            return LOW_RATE;\r\n        }\r\n\r\n        if (utilization <= 8e17) {\r\n            return MID_RATE;\r\n        }\r\n\r\n        return HIGH_RATE;\r\n    }\r\n}"
+      },
+      "project/contracts/interfaces/IInterestRateModel.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.26;\r\n\r\ninterface IInterestRateModel {\r\n    function getBorrowRate(uint256 utilization) external view returns (uint256);\r\n}"
+      }
+    }
+  }
+}

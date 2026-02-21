@@ -1,0 +1,90 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "InterestRateModel",
+  "sourceName": "contracts/interest/InterestRateModel.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "InvalidUtilization",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "HIGH_RATE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "LOW_RATE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_UTILIZATION",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MID_RATE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "utilization",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBorrowRate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600e575f5ffd5b5061017a8061001c5f395ff3fe608060405234801561000f575f5ffd5b5060043610610055575f3560e01c8063124fea4f1461005957806371d6a0e21461007a5780639fa83b5a14610088578063c99de22f1461009b578063ff104ee7146100aa575b5f5ffd5b610068670de0b6b3a764000081565b60405190815260200160405180910390f35b61006866b1a2bc2ec5000081565b61006861009636600461012d565b6100b9565b6100686702c68af0bb14000081565b61006867016345785d8a000081565b5f670de0b6b3a76400008211156100e3576040516325062e2560e01b815260040160405180910390fd5b6706f05b59d3b200008211610100575066b1a2bc2ec50000919050565b670b1a2bc2ec500000821161011e575067016345785d8a0000919050565b506702c68af0bb140000919050565b5f6020828403121561013d575f5ffd5b503591905056fea2646970667358221220e2f5852ed3e429e4bb9a771991f1b96b34def607cc8d176b296d515f2a9b6c7a64736f6c634300081c0033",
+  "deployedBytecode": "0x608060405234801561000f575f5ffd5b5060043610610055575f3560e01c8063124fea4f1461005957806371d6a0e21461007a5780639fa83b5a14610088578063c99de22f1461009b578063ff104ee7146100aa575b5f5ffd5b610068670de0b6b3a764000081565b60405190815260200160405180910390f35b61006866b1a2bc2ec5000081565b61006861009636600461012d565b6100b9565b6100686702c68af0bb14000081565b61006867016345785d8a000081565b5f670de0b6b3a76400008211156100e3576040516325062e2560e01b815260040160405180910390fd5b6706f05b59d3b200008211610100575066b1a2bc2ec50000919050565b670b1a2bc2ec500000821161011e575067016345785d8a0000919050565b506702c68af0bb140000919050565b5f6020828403121561013d575f5ffd5b503591905056fea2646970667358221220e2f5852ed3e429e4bb9a771991f1b96b34def607cc8d176b296d515f2a9b6c7a64736f6c634300081c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/interest/InterestRateModel.sol",
+  "buildInfoId": "solc-0_8_28-8bfb2693684fe165013ed6aba625191d12631ba0"
+}
