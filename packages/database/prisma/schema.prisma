@@ -12,3 +12,98 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+    id  String  @id @default(cuid())
+    walletAddress   String  @unique
+    createdAt   DateTime    @default(now())
+
+    positions   Position[]
+    transactions    Transaction[]
+    liquidationAsBorrower   Liquidation[]   @relation("Borrower")
+    liquidationAsLiquidator Liquidation[]   @relation("Liquidator")
+}
+
+model Position {
+    id  String  @id @default(cuid())
+    userId  String
+    user    User    @relation(fields: [userId], references: [id])
+
+    collateralEth   Decimal @db.Decimal(38, 18)
+    debtUsdc    Decimal @db.Decimal(38, 6)
+
+    collateralUsd   Decimal @db.Decimal(38, 6)
+    healthFactor    Decimal @db.Decimal(38, 18)
+    ltv Decimal @db.Decimal(10, 4)
+
+    updatedAt       DateTime @updatedAt
+
+    @@unique([userId])
+}
+
+model Transaction {
+    id        String   @id @default(cuid())
+    txHash    String   @unique
+
+    userId    String?
+    user      User?    @relation(fields: [userId], references: [id])
+
+    action    ActionType
+    amount    Decimal  @db.Decimal(38, 18)
+
+    blockNumber Int
+    timestamp   DateTime
+
+    createdAt DateTime @default(now())
+}
+
+enum ActionType {
+    DEPOSIT
+    WITHDRAW
+    BORROW
+    REPAY
+    LIQUIDATE
+}
+
+model Liquidation {
+    id              String   @id @default(cuid())
+
+    borrowerId      String
+    borrower        User     @relation("Borrower", fields: [borrowerId], references: [id])
+
+    liquidatorId    String
+    liquidator      User     @relation("Liquidator", fields: [liquidatorId], references: [id])
+
+    repayAmount     Decimal  @db.Decimal(38, 6)
+    collateralSeized Decimal @db.Decimal(38, 18)
+    bonusUsd        Decimal  @db.Decimal(38, 6)
+
+    txHash          String   @unique
+    timestamp       DateTime
+
+    createdAt       DateTime @default(now())
+}
+
+model ProtocalStats {
+    id              String   @id @default(cuid())
+    date            DateTime @unique
+
+    tvlUsd          Decimal  @db.Decimal(38, 6)
+    totalBorrowUsd  Decimal  @db.Decimal(38, 6)
+    utilization     Decimal  @db.Decimal(10, 4)
+
+    liquidationCount Int
+    activeUsers      Int
+
+    createdAt DateTime @default(now())
+}
+
+model OraclePrice {
+    id        String   @id @default(cuid())
+    priceUsd  Decimal  @db.Decimal(38, 8)
+    timestamp DateTime
+
+    createdAt DateTime @default(now())
+
+    @@index([timestamp])
+}
