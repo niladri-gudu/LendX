@@ -6,6 +6,15 @@
     "compile": "hardhat compile",
     "test": "hardhat test"
   },
+  "main": "./index.ts",
+  "types": "./index.ts",
+
+  "exports": {
+    ".": "./index.ts",
+    "./addresses": "./addresses.js",
+    "./abis/*": "./abis/*"
+  },
+
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^3.0.7",
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.2",
