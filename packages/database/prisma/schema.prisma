@@ -57,6 +57,12 @@ model Transaction {
     createdAt DateTime @default(now())
 }
 
+model IndexerState {
+  id               String   @id @default("main")
+  lastIndexedBlock Int
+  updatedAt        DateTime @updatedAt
+}
+
 enum ActionType {
     DEPOSIT
     WITHDRAW
