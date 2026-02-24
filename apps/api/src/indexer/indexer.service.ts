@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { prisma } from '@repo/db';
 import { IndexerProcessor } from './indexer.processor';
+import { EventRouter } from './router/event.router';
 
 @Injectable()
 export class IndexerService implements OnModuleInit {
   private processor = new IndexerProcessor();
+  private router = new EventRouter();
   private running = false;
 
   async onModuleInit() {
@@ -70,27 +73,16 @@ export class IndexerService implements OnModuleInit {
   }
 
   private async handleLog(log: any) {
-    const event = log.eventName as string;
+    const routed = {
+      txHash: log.txHash,
+      logIndex: log.logIndex,
+      blockNumber: Number(log.blockNumber),
+      timestamp: Number(log.blockTimestamp),
+      eventName: log.eventName,
+      args: log.args,
+    };
 
-    switch (event) {
-      case 'Deposit':
-        console.log('🟢 Deposit:', log.args);
-        break;
-      case 'Withdraw':
-        console.log('🟡 Withdraw:', log.args);
-        break;
-      case 'Borrow':
-        console.log('🔵 Borrow:', log.args);
-        break;
-      case 'Repay':
-        console.log('🟣 Repay:', log.args);
-        break;
-      case 'Liquidate':
-        console.log('🔴 Liquidate:', log.args);
-        break;
-      default:
-        console.warn('Unknown event:', event);
-    }
+    await this.router.route(routed);
   }
 
   private sleep(ms: number) {

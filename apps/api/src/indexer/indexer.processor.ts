@@ -19,19 +19,26 @@ export class IndexerProcessor {
       toBlock: BigInt(toBlock),
     });
 
-    return logs.map((log) => {
-      const decoded = decodeEventLog({
-        abi: lendingPoolAbi,
-        data: log.data,
-        topics: log.topics,
-      });
+    return Promise.all(
+      logs.map(async (log) => {
+        const decoded = decodeEventLog({
+          abi: lendingPoolAbi,
+          data: log.data,
+          topics: log.topics,
+        });
 
-      return {
-        ...decoded,
-        blockNumber: log.blockNumber,
-        txHash: log.transactionHash,
-        logIndex: log.logIndex,
-      };
-    });
+        const block = await this.client.getBlock({
+          blockNumber: log.blockNumber,
+        });
+
+        return {
+          ...decoded,
+          blockNumber: log.blockNumber,
+          blockTimestamp: Number(block.timestamp),
+          txHash: log.transactionHash,
+          logIndex: log.logIndex,
+        };
+      }),
+    );
   }
 }

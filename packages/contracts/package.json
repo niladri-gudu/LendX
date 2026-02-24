@@ -1,20 +1,20 @@
 {
   "name": "@repo/contracts",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "build": "tsc -p tsconfig.build.json"
   },
   "main": "./index.ts",
   "types": "./index.ts",
-
   "exports": {
-    ".": "./index.ts",
-    "./addresses": "./addresses.js",
-    "./abis/*": "./abis/*"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   },
-
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^3.0.7",
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.2",

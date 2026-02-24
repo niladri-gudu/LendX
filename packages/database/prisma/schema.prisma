@@ -11,6 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
 }
 
 model User {
@@ -36,6 +37,8 @@ model Position {
     healthFactor    Decimal @db.Decimal(38, 18)
     ltv Decimal @db.Decimal(10, 4)
 
+    blockNumber     Int
+
     updatedAt       DateTime @updatedAt
 
     @@unique([userId])
@@ -43,7 +46,9 @@ model Position {
 
 model Transaction {
     id        String   @id @default(cuid())
-    txHash    String   @unique
+
+    txHash    String
+    logIndex  Int
 
     userId    String?
     user      User?    @relation(fields: [userId], references: [id])
@@ -55,6 +60,10 @@ model Transaction {
     timestamp   DateTime
 
     createdAt DateTime @default(now())
+
+    @@unique([txHash, logIndex])
+    @@index([userId])
+    @@index([blockNumber])
 }
 
 model IndexerState {

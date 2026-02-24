@@ -28,6 +28,7 @@
     "@repo/contracts": "workspace:*",
     "@repo/db": "workspace:*",
     "bullmq": "^5.70.0",
+    "dotenv": "^17.3.1",
     "ioredis": "^5.9.3",
     "pg": "^8.18.0",
     "reflect-metadata": "^0.2.2",
