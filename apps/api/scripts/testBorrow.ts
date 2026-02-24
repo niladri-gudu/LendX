@@ -17,7 +17,7 @@ async function main() {
     address: contracts.LendingPool.address,
     abi: contracts.LendingPool.abi,
     functionName: 'borrow',
-    args: [1_000_000],
+    args: [500_000_000],
   });
 
   console.log('Borrow tx:', hash);

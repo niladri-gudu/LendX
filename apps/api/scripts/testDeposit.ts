@@ -18,7 +18,7 @@ async function main() {
     address: contracts.LendingPool.address,
     abi: contracts.LendingPool.abi,
     functionName: 'deposit',
-    value: parseEther('0.01'),
+    value: parseEther('1.00'),
   });
 
   console.log('Deposit tx:', hash);
