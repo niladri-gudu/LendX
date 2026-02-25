@@ -4,13 +4,17 @@
 import { prisma } from '@repo/db';
 import { EventHandler } from './base.handler';
 import { RoutedLog } from '../router/event.types';
+
 import { eventToAction } from '../utils/actionMap';
+import { PositionMirror } from '../mirrors/position.mirror';
+
+const mirror = new PositionMirror();
 
 export class LiquidationHandler implements EventHandler {
   async handle(log: RoutedLog) {
     const action = eventToAction[log.eventName];
 
-    const borrower = log.args?.borrower?.toLowerCase();
+    const borrower = log.args.user.toLowerCase();
     const repayAmount = log.args?.repayAmount;
 
     if (!borrower) {
@@ -20,7 +24,7 @@ export class LiquidationHandler implements EventHandler {
 
     const { txHash, logIndex, blockNumber, timestamp } = log;
 
-    await prisma.$transaction(async (tx) => {
+    const user = await prisma.$transaction(async (tx) => {
       const user = await tx.user.upsert({
         where: { walletAddress: borrower },
         update: {},
@@ -42,8 +46,11 @@ export class LiquidationHandler implements EventHandler {
           timestamp: new Date(timestamp * 1000),
         },
       });
+
+      return user as { id: string; walletAddress: string };
     });
 
+    await mirror.recompute(user.id as string);
     console.log('Liquidation handler', log.txHash, log.logIndex);
   }
 }

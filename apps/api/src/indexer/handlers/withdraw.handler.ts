@@ -8,6 +8,9 @@ import { RoutedLog } from '../router/event.types';
 import { eventToAction } from '../utils/actionMap';
 import { extractUser } from '../utils/extractUser';
 import { extractAmount } from '../utils/extractAmount';
+import { PositionMirror } from '../mirrors/position.mirror';
+
+const mirror = new PositionMirror();
 
 export class WithdrawHandler implements EventHandler {
   async handle(log: RoutedLog) {
@@ -23,7 +26,7 @@ export class WithdrawHandler implements EventHandler {
 
     const { txHash, logIndex, blockNumber, timestamp } = log;
 
-    await prisma.$transaction(async (tx) => {
+    const user = await prisma.$transaction(async (tx) => {
       const user = await tx.user.upsert({
         where: { walletAddress },
         update: {},
@@ -48,7 +51,11 @@ export class WithdrawHandler implements EventHandler {
           timestamp: new Date(timestamp * 1000),
         },
       });
+
+      return user as { id: string; walletAddress: string };
     });
+
+    await mirror.recompute(user.id as string);
     console.log('Withdraw handler', log.txHash, log.logIndex);
   }
 }

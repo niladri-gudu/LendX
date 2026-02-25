@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { createWalletClient, http } from 'viem';
+import { createWalletClient, http, parseUnits } from 'viem';
 import { sepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { contracts } from '@repo/contracts';
@@ -13,14 +13,16 @@ const client = createWalletClient({
 });
 
 async function main() {
-  const hash = await client.writeContract({
-    address: contracts.LendingPool.address,
-    abi: contracts.LendingPool.abi,
-    functionName: 'borrow',
-    args: [100_000_000],
+  const newPrice = parseUnits('2000', 8);
+
+  const tx = await client.writeContract({
+    address: contracts.PriceOracle.address,
+    abi: contracts.PriceOracle.abi,
+    functionName: 'setPrice',
+    args: [newPrice],
   });
 
-  console.log('Borrow tx:', hash);
+  console.log('Oracle updated tx:', tx);
 }
 
 main();

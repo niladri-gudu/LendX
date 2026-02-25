@@ -1,13 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { createPublicClient, http, formatUnits } from 'viem';
+import { sepolia } from 'viem/chains';
 import { PositionService } from '../services/position.service';
+import { contracts } from '@repo/contracts';
 
-const ETH_PRICE_USD = 2000;
+const publicClient = createPublicClient({
+  chain: sepolia,
+  transport: http(process.env.RPC_URL),
+});
+
 const LIQ_THRESHOLD = 0.8;
 
 export class PositionMirror {
   private service = new PositionService();
+
+  private async getETHPriceUSD(): Promise<number> {
+    const raw = await publicClient.readContract({
+      address: contracts.PriceOracle.address,
+      abi: contracts.PriceOracle.abi,
+      functionName: 'getETHPrice',
+    });
+
+    const price = Number(formatUnits(raw as bigint, 8));
+    return price;
+  }
 
   async recompute(userId: string) {
     const txs = await this.service.getUserTransactions(userId);
@@ -26,10 +44,10 @@ export class PositionMirror {
           collateralETH -= amount;
           break;
         case 'BORROW':
-          debtUSDC += amount / 1e6;
+          debtUSDC += amount;
           break;
         case 'REPAY':
-          debtUSDC -= amount / 1e6;
+          debtUSDC -= amount;
           break;
       }
     }
@@ -37,7 +55,9 @@ export class PositionMirror {
     collateralETH = Math.max(collateralETH, 0);
     debtUSDC = Math.max(debtUSDC, 0);
 
-    const collateralUSD = collateralETH * ETH_PRICE_USD;
+    const ethPriceUSD = await this.getETHPriceUSD();
+
+    const collateralUSD = collateralETH * ethPriceUSD;
 
     const ltv = collateralUSD === 0 ? 0 : debtUSDC / collateralUSD;
 

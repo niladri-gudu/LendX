@@ -5,5 +5,5 @@ export const eventToAction: Record<string, ActionType> = {
   Withdraw: ActionType.WITHDRAW,
   Borrow: ActionType.BORROW,
   Repay: ActionType.REPAY,
-  Liquidation: ActionType.LIQUIDATE,
+  Liquidate: ActionType.LIQUIDATE,
 };

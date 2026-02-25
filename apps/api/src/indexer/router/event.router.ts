@@ -23,7 +23,7 @@ export class EventRouter {
         return this.borrow.handle(log);
       case 'Repay':
         return this.repay.handle(log);
-      case 'Liquidation':
+      case 'Liquidate':
         return this.liquidation.handle(log);
       default:
         console.warn('Unknown event:', log.eventName);
