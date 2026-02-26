@@ -7,6 +7,7 @@ import { RoutedLog } from '../router/event.types';
 
 import { eventToAction } from '../utils/actionMap';
 import { PositionMirror } from '../mirrors/position.mirror';
+import { extractAmount } from '../utils/extractAmount';
 
 const mirror = new PositionMirror();
 
@@ -15,7 +16,8 @@ export class LiquidationHandler implements EventHandler {
     const action = eventToAction[log.eventName];
 
     const borrower = log.args.user.toLowerCase();
-    const repayAmount = log.args?.repayAmount;
+
+    const repayAmount = extractAmount(log);
 
     if (!borrower) {
       console.warn('Liquidation missing borrower', log.txHash);
@@ -41,7 +43,7 @@ export class LiquidationHandler implements EventHandler {
           logIndex,
           userId: user.id,
           action,
-          amount: repayAmount?.toString() ?? '0',
+          amount: repayAmount,
           blockNumber,
           timestamp: new Date(timestamp * 1000),
         },

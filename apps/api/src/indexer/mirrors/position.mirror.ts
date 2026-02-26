@@ -67,8 +67,6 @@ export class PositionMirror {
       healthFactor = (collateralUSD * LIQ_THRESHOLD) / debtUSDC;
     }
 
-    console.log('Computed debt:', debtUSDC);
-
     await this.service.upsertPosition({
       userId,
       collateralEth: collateralETH,

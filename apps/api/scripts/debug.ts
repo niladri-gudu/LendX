@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { createPublicClient, http } from 'viem';
 import { sepolia } from 'viem/chains';
 import { contracts } from '@repo/contracts';
@@ -8,14 +9,14 @@ const client = createPublicClient({
 });
 
 async function main() {
-  const debt = await client.readContract({
+  const collateral = (await client.readContract({
     address: contracts.LendingPool.address,
     abi: contracts.LendingPool.abi,
-    functionName: 'debtUSDC',
+    functionName: 'collateralETH',
     args: ['0x8B3A3cEE208Be2E631950715273ef5bB541ae082'],
-  });
+  })) as bigint;
 
-  console.log('On-chain debt:', Number(debt) / 1e6, 'USDC');
+  console.log(collateral.toString());
 }
 
 main();

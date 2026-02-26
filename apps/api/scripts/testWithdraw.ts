@@ -7,7 +7,6 @@ import {
   formatEther,
 } from 'viem';
 import { sepolia } from 'viem/chains';
-import { PrivateKeyAccount } from 'viem';
 import { contracts } from '@repo/contracts';
 import { privateKeyToAccount } from 'viem/accounts';
 
@@ -41,7 +40,7 @@ async function main() {
     throw new Error('No collateral to withdraw');
   }
 
-  const withdrawAmount = parseEther('1.00');
+  const withdrawAmount = parseEther('0.01');
 
   console.log('Attempting to withdraw:', formatEther(withdrawAmount), 'ETH');
 

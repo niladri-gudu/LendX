@@ -2,7 +2,13 @@ import { RoutedLog } from '../router/event.types';
 import { formatUnits } from 'viem';
 
 export function extractAmount(log: RoutedLog): number {
-  const raw = log.args?.amount as bigint | undefined;
+  let raw: bigint | undefined;
+
+  if (log.eventName === 'Liquidate') {
+    raw = log.args?.repayAmount as bigint | undefined;
+  } else {
+    raw = log.args?.amount as bigint | undefined;
+  }
 
   if (raw === undefined) {
     throw new Error(`Missing amount in ${log.eventName} log ${log.txHash}`);
@@ -15,6 +21,7 @@ export function extractAmount(log: RoutedLog): number {
 
     case 'Borrow':
     case 'Repay':
+    case 'Liquidate':
       return Number(formatUnits(raw, 6));
 
     default:

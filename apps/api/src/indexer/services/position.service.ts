@@ -6,10 +6,11 @@
 import { prisma } from '@repo/db';
 
 export class PositionService {
+  getPositionByWallet: any;
   async getUserTransactions(userId: string) {
     return prisma.transaction.findMany({
       where: { userId },
-      orderBy: { createdAt: 'asc' },
+      orderBy: [{ blockNumber: 'asc' }, { logIndex: 'asc' }],
     });
   }
 
