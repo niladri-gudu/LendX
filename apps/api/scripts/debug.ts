@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { createPublicClient, http } from 'viem';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { createPublicClient, formatUnits, http } from 'viem';
 import { sepolia } from 'viem/chains';
 import { contracts } from '@repo/contracts';
 
-const client = createPublicClient({
+const publicClient = createPublicClient({
   chain: sepolia,
   transport: http(process.env.RPC_URL),
 });
 
 async function main() {
-  const collateral = (await client.readContract({
+  const oracleFromPool = await publicClient.readContract({
     address: contracts.LendingPool.address,
     abi: contracts.LendingPool.abi,
-    functionName: 'collateralETH',
-    args: ['0x8B3A3cEE208Be2E631950715273ef5bB541ae082'],
-  })) as bigint;
+    functionName: 'oracle',
+  });
 
-  console.log(collateral.toString());
+  console.log('Pool oracle:', oracleFromPool);
+  console.log('Frontend oracle:', contracts.PriceOracle.address);
 }
 
 main();

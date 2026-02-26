@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -12,6 +13,7 @@ const publicClient = createPublicClient({
 });
 
 const LIQ_THRESHOLD = 0.8;
+const LIQ_BONUS = 1.05;
 
 export class PositionMirror {
   private service = new PositionService();
@@ -23,8 +25,7 @@ export class PositionMirror {
       functionName: 'getETHPrice',
     });
 
-    const price = Number(formatUnits(raw as bigint, 8));
-    return price;
+    return Number(formatUnits(raw as bigint, 8));
   }
 
   async recompute(userId: string) {
@@ -32,6 +33,8 @@ export class PositionMirror {
 
     let collateralETH = 0;
     let debtUSDC = 0;
+
+    const ethPriceUSD = await this.getETHPriceUSD();
 
     for (const tx of txs) {
       const amount = Number(tx.amount);
@@ -49,20 +52,22 @@ export class PositionMirror {
         case 'REPAY':
           debtUSDC -= amount;
           break;
+        case 'LIQUIDATE':
+          debtUSDC -= amount;
+
+          const seizedEth = (amount / ethPriceUSD) * LIQ_BONUS;
+          collateralETH -= seizedEth;
+          break;
       }
     }
 
     collateralETH = Math.max(collateralETH, 0);
     debtUSDC = Math.max(debtUSDC, 0);
 
-    const ethPriceUSD = await this.getETHPriceUSD();
-
     const collateralUSD = collateralETH * ethPriceUSD;
-
     const ltv = collateralUSD === 0 ? 0 : debtUSDC / collateralUSD;
 
     let healthFactor = Number.MAX_SAFE_INTEGER;
-
     if (debtUSDC > 0) {
       healthFactor = (collateralUSD * LIQ_THRESHOLD) / debtUSDC;
     }
