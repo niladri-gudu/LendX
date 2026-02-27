@@ -8,6 +8,7 @@ import { IndexerModule } from './indexer/indexer.module';
 import { PositionsModule } from './positions/positions.module';
 import { StatsModule } from './stats/stats.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TransactionsModule } from './transactions/transactions.module';
     PositionsModule,
     StatsModule,
     TransactionsModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

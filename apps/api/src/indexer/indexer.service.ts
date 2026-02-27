@@ -3,11 +3,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { prisma } from '@repo/db';
+import { createPublicClient, http } from 'viem';
+import { sepolia } from 'viem/chains';
 import { IndexerProcessor } from './indexer.processor';
 import { EventRouter } from './router/event.router';
 
 @Injectable()
 export class IndexerService implements OnModuleInit {
+  private publicClient = createPublicClient({
+    chain: sepolia,
+    transport: http(process.env.RPC_URL),
+  });
+
   private processor = new IndexerProcessor();
   private router = new EventRouter();
   private running = false;
@@ -87,5 +94,36 @@ export class IndexerService implements OnModuleInit {
 
   private sleep(ms: number) {
     return new Promise((r) => setTimeout(r, ms));
+  }
+
+  async getStatus() {
+    const state = await prisma.indexerState.findUnique({
+      where: { id: 'main' },
+    });
+
+    const lastIndexedBlock = state?.lastIndexedBlock || 0;
+
+    let chainHead = 0;
+
+    try {
+      chainHead = Number(await this.publicClient.getBlockNumber());
+    } catch (error) {
+      console.error('RPC error while fetching block number:', error);
+    }
+
+    const lag = Math.max(chainHead - lastIndexedBlock, 0);
+
+    const HEALTHY_LAG_THRESHOLD = 20;
+
+    const isHealthy = lag < HEALTHY_LAG_THRESHOLD;
+    const synced = lag === 0;
+
+    return {
+      lastIndexedBlock,
+      chainHead,
+      lag,
+      isHealthy,
+      synced,
+    };
   }
 }
