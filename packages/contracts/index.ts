@@ -1,8 +1,8 @@
 export const addresses = {
-  LendingPool: "0xFD21de4B27ccbE0A17c0e2E2e923A2E7902Bbe86",
-  MockUSDC: "0xCDeEa7E3896D38b35eEc261b2B9D1555Ff0802e0",
-  PriceOracle: "0xb267e7B3EC8aF73e3ED247473A5e579202dd8cC2",
-  InterestRateModel: "0x22637C60Ac0F7bD24423bd0681ADFA5D03322157",
+  InterestRateModel: "0xe4Aac29336d533B739511c874976bdD12a1F090a",
+  MockUSDC: "0xB5b6d7A1134C93DE23FfB968F7d9124534af78bA",
+  PriceOracle: "0x2464eC80100E89F065bAd83D15901310Dc3127D2",
+  LendingPool: "0x00F6Aa1744DdF7a1EB3CaBEaAFc151b392F6c6ea",
 } as const;
 
 import { lendingPoolAbi } from "./abis/lendingPoolAbi";

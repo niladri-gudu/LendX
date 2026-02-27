@@ -27,8 +27,8 @@ export class StatsService {
     });
 
     return {
-      tvlUsed: tvl,
-      totalBorrowsUsd: totalBorrowed,
+      tvlUsd: tvl,
+      totalDebtUsd: totalBorrowed,
       utilization,
       activeUsers,
       liquidations,

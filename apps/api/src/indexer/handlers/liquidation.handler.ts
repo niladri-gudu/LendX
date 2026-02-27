@@ -15,7 +15,7 @@ export class LiquidationHandler implements EventHandler {
   async handle(log: RoutedLog) {
     const action = eventToAction[log.eventName];
 
-    const borrower = log.args.user.toLowerCase();
+    const borrower = log.args?.user?.toLowerCase();
 
     const repayAmount = extractAmount(log);
 

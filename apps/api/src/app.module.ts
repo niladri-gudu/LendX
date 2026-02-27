@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { IndexerModule } from './indexer/indexer.module';
 import { PositionsModule } from './positions/positions.module';
 import { StatsModule } from './stats/stats.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { StatsModule } from './stats/stats.module';
     IndexerModule,
     PositionsModule,
     StatsModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

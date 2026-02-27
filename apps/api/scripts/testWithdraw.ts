@@ -40,7 +40,7 @@ async function main() {
     throw new Error('No collateral to withdraw');
   }
 
-  const withdrawAmount = parseEther('0.01');
+  const withdrawAmount = parseEther('0.2');
 
   console.log('Attempting to withdraw:', formatEther(withdrawAmount), 'ETH');
 

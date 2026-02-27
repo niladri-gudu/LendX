@@ -27,7 +27,7 @@ const walletClient = createWalletClient({
 });
 
 async function main() {
-  const repayAmount = parseUnits('100', 6);
+  const repayAmount = parseUnits('1', 6);
 
   console.log('Repaying:', formatUnits(repayAmount, 6), 'USDC');
 

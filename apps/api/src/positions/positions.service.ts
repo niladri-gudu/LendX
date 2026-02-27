@@ -59,29 +59,6 @@ export class PositionsService {
       collateralUsd: Number(p.collateralUsd),
     }));
   }
-
-  async getUserHistory(wallet: string) {
-    const normalizedWallet = wallet.toLowerCase();
-
-    const user = await prisma.user.findUnique({
-      where: { walletAddress: normalizedWallet },
-    });
-
-    if (!user) return [];
-
-    const txs = await prisma.transaction.findMany({
-      where: { userId: user.id },
-      orderBy: { timestamp: 'desc' },
-      take: 20,
-    });
-
-    return txs.map((tx) => ({
-      action: tx.action,
-      amount: Number(tx.amount),
-      txHash: tx.txHash,
-      timestamp: tx.timestamp,
-    }));
-  }
 }
 
 function emptyPosition(wallet: string): PositionResponseDto {

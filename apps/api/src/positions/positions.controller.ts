@@ -23,10 +23,4 @@ export class PositionsController {
   ): Promise<PositionResponseDto> {
     return this.positionsService.getPositionByWallet(wallet);
   }
-
-  @Get(':wallet/history')
-  @ApiOperation({ summary: 'Get user transaction history' })
-  async getHistory(@Param('wallet') wallet: string) {
-    return this.positionsService.getUserHistory(wallet);
-  }
 }
