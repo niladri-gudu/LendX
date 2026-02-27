@@ -9,17 +9,19 @@ import { PositionsModule } from './positions/positions.module';
 import { StatsModule } from './stats/stats.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { HealthModule } from './health/health.module';
+import { LiquidationModule } from './liquidation/liquidation.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    HealthModule,
     IndexerModule,
     PositionsModule,
     StatsModule,
     TransactionsModule,
-    HealthModule,
+    LiquidationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
