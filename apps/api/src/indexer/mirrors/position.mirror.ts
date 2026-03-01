@@ -67,10 +67,10 @@ export class PositionMirror {
     const collateralUSD = collateralETH * ethPriceUSD;
     const ltv = collateralUSD === 0 ? 0 : debtUSDC / collateralUSD;
 
-    let healthFactor = Number.MAX_SAFE_INTEGER;
-    if (debtUSDC > 0) {
-      healthFactor = (collateralUSD * LIQ_THRESHOLD) / debtUSDC;
-    }
+    let healthFactor =
+      debtUSDC === 0 ? 999 : (collateralUSD * LIQ_THRESHOLD) / debtUSDC;
+
+    healthFactor = Number(healthFactor.toFixed(4));
 
     await this.service.upsertPosition({
       userId,

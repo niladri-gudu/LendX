@@ -16,7 +16,7 @@ export class WithdrawHandler implements EventHandler {
   async handle(log: RoutedLog) {
     const action = eventToAction[log.eventName];
 
-    const walletAddress = extractUser(log)?.toLowerCase();
+    const walletAddress = extractUser(log)
     const amount = extractAmount(log);
 
     if (!walletAddress) {

@@ -13,7 +13,7 @@ const client = createWalletClient({
 });
 
 async function main() {
-  const newPrice = parseUnits('20', 8);
+  const newPrice = parseUnits('2000', 8);
 
   const tx = await client.writeContract({
     address: contracts.PriceOracle.address,

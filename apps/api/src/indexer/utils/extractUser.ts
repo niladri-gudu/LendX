@@ -4,9 +4,9 @@
 import { RoutedLog } from '../router/event.types';
 
 export function extractUser(log: RoutedLog): `0x${string}` | null {
-  const user = log.args?.user;
+  const raw = log.args?.user ?? log.args?.borrower ?? log.args?.liquidator;
 
-  if (!user) return null;
+  if (!raw) return null;
 
-  return user.toLowerCase() as `0x${string}`;
+  return raw.toLowerCase() as `0x${string}`;
 }

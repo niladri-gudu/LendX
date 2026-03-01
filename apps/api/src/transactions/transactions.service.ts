@@ -11,7 +11,6 @@ export class TransactionsService {
     action?: ActionType,
   ) {
     const normalizedWallet = wallet.toLowerCase();
-
     const safeLimit = Math.min(Math.max(limit, 1), 100);
     const safeOffset = Math.max(offset, 0);
 
@@ -26,15 +25,23 @@ export class TransactionsService {
       };
     }
 
-    const txs = await prisma.transaction.findMany({
-      where: {
-        userId: user.id,
-        ...(action ? { action } : {}),
-      },
-      orderBy: { timestamp: 'desc' },
-      take: safeLimit,
-      skip: safeOffset,
-    });
+    const [txs, totalCount] = await Promise.all([
+      prisma.transaction.findMany({
+        where: {
+          userId: user.id,
+          ...(action ? { action } : {}),
+        },
+        orderBy: { timestamp: 'desc' },
+        take: safeLimit,
+        skip: safeOffset,
+      }),
+      prisma.transaction.count({
+        where: {
+          userId: user.id,
+          ...(action ? { action } : {}),
+        },
+      }),
+    ]);
 
     const items = txs.map((tx) => ({
       action: tx.action,
@@ -48,7 +55,7 @@ export class TransactionsService {
       pagination: {
         limit: safeLimit,
         offset: safeOffset,
-        count: items.length,
+        count: totalCount,
       },
     };
   }
