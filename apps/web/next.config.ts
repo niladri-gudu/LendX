@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ["@repo/contracts"],
   typescript: {
     ignoreBuildErrors: true,
-    transpilePackages: ["@repo/contracts"],
   },
 };
 

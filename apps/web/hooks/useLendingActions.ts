@@ -5,11 +5,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { config } from "../lib/wagmi";
 import { parseEther } from "viem";
 import { toast } from "sonner";
-import { LENDING_POOL_ABI } from "../lib/abi/lendingPool";
 import { LENDING_POOL_ADDRESS, MOCK_USDC_ADDRESS } from "../lib/contracts";
-import { MOCK_USDC_ABI } from "../lib/abi/mockUsdc";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { useState } from "react";
+
+import { contracts } from "@repo/contracts";
+
+const LENDING_POOL_ABI = contracts.LendingPool.abi;
+const MOCK_USDC_ABI = contracts.MockUSDC.abi;
 
 export function useLendingActions() {
   const { mutateAsync } = useWriteContract();
