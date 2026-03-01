@@ -55,7 +55,7 @@ The backend indexes every on-chain event into Postgres in real time, so the fron
 
 ### Infrastructure
 - **[Vercel](https://vercel.com/)** — Frontend
-- **Railway / Render** — Backend + Postgres
+- **AWS EC2** — Backend (nginx + PM2)
 - **Sepolia** — Testnet deployment
 
 ---
@@ -176,7 +176,7 @@ This was Project 2 of my 6 Projects in 60 Days challenge — the one where it st
 
 ## Author
 
-**Niladri** — [@dev_niladri](https://twitter.com/dev_niladri)
+**Niladri** — [@dev_niladri](https://x.com/dev_niladri)
 
 6 projects. 60 days. Web2 → Web3 in public. 4 more to go.
 
