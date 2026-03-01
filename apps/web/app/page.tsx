@@ -18,8 +18,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Borrow stablecoins against your ETH collateral with instant
-            liquidity, low interest rates, and institutional-grade security.
+            Borrow stablecoins against your ETH collateral with instant liquidity, real-time health monitoring, and fully transparent on-chain execution.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -58,17 +57,17 @@ export default function LandingPage() {
           <StepCard
             number="01"
             title="Deposit Collateral"
-            desc="Connect your wallet and supply ETH. Your assets are locked in an audited smart contract."
+            desc="Connect your wallet and supply ETH. Your assets are held in a non-custodial smart contract, giving you full control over your supplied ETH."
           />
           <StepCard
             number="02"
             title="Borrow Stablecoins"
-            desc="Borrow up to 80% of your collateral value in USDC instantly with low fixed interest."
+            desc="Borrow up to 80% of your collateral value instantly based on current Chainlink price feeds, maintaining a safe collateralization ratio."
           />
           <StepCard
             number="03"
             title="Manage & Repay"
-            desc="Monitor your Health Factor. Repay anytime to unlock your collateral and interest."
+            desc="Monitor your Health Factor. Repay anytime to unlock your collateral. Monitor your Health Factor in real-time to prevent liquidation."
           />
         </div>
       </section>
@@ -83,15 +82,13 @@ export default function LandingPage() {
               Built on hardened <br /> smart contracts.
             </h2>
             <p className="text-zinc-400 mb-8 leading-relaxed">
-              LendX utilizes decentralized oracles and over-collateralization to
-              ensure protocol solvency. Your funds are never managed by
-              humans—only by immutable code on the Sepolia network.
+              LendX leverages decentralized oracles and over-collateralization to maintain protocol stability. Your positions are managed by transparent smart contract logic on the Sepolia testnet.
             </p>
 
             <div className="space-y-4">
               <SecurityCheck text="Non-custodial: Only you control your keys" />
               <SecurityCheck text="Real-time Chainlink Price Feeds" />
-              <SecurityCheck text="Transparent Liquidation Auctions" />
+              <SecurityCheck text="Automated Liquidation Logic" />
             </div>
           </div>
 
