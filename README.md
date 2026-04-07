@@ -2,7 +2,6 @@
 
 > **Aave-style lending, built from scratch.** Deposit ETH as collateral, borrow USDC, watch your health factor in real time, and get liquidated if you're not careful.
 
-🔴 **Live App** → [lendx.niladri.app](https://lendx.niladri.app)  
 💻 **Project 2/6 of my [6 Projects in 60 Days](https://twitter.com/dev_niladri) challenge**  
 ← [Project 1: QuestFi](https://github.com/niladri-gudu/QuestFi)
 
